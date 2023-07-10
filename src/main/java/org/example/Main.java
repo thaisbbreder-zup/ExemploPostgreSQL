@@ -6,10 +6,14 @@ public class Main {
     public static void createTable() {
         System.out.println("\n------------- PESQUISA BANCO DE DADOS: EXEMPLO COM POSTGRESQL -------------\n");
 
+        // Estabelece a conexão com o banco de dados
         Connection connection = DatabaseConnection.getConnection();
         if (connection != null) {
             try {
+                // Criação da declaração para executar comandos SQL
                 Statement statement = connection.createStatement();
+
+                // Criação da tabela tabela_exemplo se ela não existir
                 String query = "CREATE TABLE IF NOT EXISTS tabela_exemplo (id INT PRIMARY KEY, nome VARCHAR(100))";
                 statement.executeUpdate(query);
                 System.out.println("---------> Tabela tabela_exemplo criada com sucesso!");
@@ -21,9 +25,11 @@ public class Main {
     }
 
     public static void insertData() {
+        // Estabelece a conexão com o banco de dados
         Connection connection = DatabaseConnection.getConnection();
         if (connection != null) {
             try {
+                // Prepara a inserção de dados na tabela_exemplo
                 String query = "INSERT INTO tabela_exemplo (id, nome) VALUES (?, ?)";
                 PreparedStatement statement = connection.prepareStatement(query);
 
@@ -55,13 +61,17 @@ public class Main {
 
 
     public static void main(String[] args) {
+        // Cria a tabela tabela_exemplo
         createTable();
 
+        // Insere dados na tabela_exemplo
         insertData();
 
+        // Estabelece a conexão com o banco de dados
         Connection connection = DatabaseConnection.getConnection();
         if (connection != null) {
             try {
+                // Conta o número de registros na tabela_exemplo
                 String countQuery = "SELECT COUNT(*) FROM tabela_exemplo";
                 PreparedStatement countStatement = connection.prepareStatement(countQuery);
                 ResultSet countResult = countStatement.executeQuery();
@@ -80,6 +90,7 @@ public class Main {
                 PreparedStatement statement = connection.prepareStatement(query);
                 ResultSet resultSet = statement.executeQuery();
 
+                // Percorre os resultados e exibe os dados da tabela
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     String nome = resultSet.getString("nome");

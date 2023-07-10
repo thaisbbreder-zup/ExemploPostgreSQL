@@ -1,4 +1,5 @@
 package org.example;
+
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +13,7 @@ public class DatabaseConnection {
     public static Connection getConnection() {
         Connection connection = null;
         try {
+            // Estabelece a conexão com o banco de dados PostgreSQL
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("---------> Conexão estabelecida com sucesso!");
         } catch (SQLException e) {
